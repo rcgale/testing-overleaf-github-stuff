@@ -5,6 +5,9 @@ jobs:
   run:
     name: Sync Overleaf with Zotero
     runs-on: ubuntu-latest
+    env:
+      ZOTERO_API_KEY: ${{ secrets.ZoteroApiKey }}
+      
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -17,11 +20,9 @@ jobs:
           python-version: '3.9'
           cache: 'pip'
 
-      - run: pip install requirements.txt
+      - run: pip install -r requirements.txt
 
       - name: Sync BibTeX
-        env:
-          ZOTERO_API_KEY: ${{ secrets.ZoteroApiKey }}
         run: zoterotex sync group 4816962 zotero-automated.bib
 
       - name: Commit changes

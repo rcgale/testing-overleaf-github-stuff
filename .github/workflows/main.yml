@@ -35,4 +35,4 @@ jobs:
           author_name: Automated github action
           author_email: mail@example.com
           message: 'Updated BibTeX files'
-          add: '$ZOTERO_AUTO_DIR'
+          add: '**/*.bib'

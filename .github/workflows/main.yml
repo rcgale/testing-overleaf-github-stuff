@@ -9,13 +9,15 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - run: echo "zoterotex" >> requirements.txt
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
           cache: 'pip'
 
-      - run: pip install zoterotex
+      - run: pip install requirements.txt
 
       - name: Sync BibTeX
         env:

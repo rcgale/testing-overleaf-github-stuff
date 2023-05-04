@@ -1,6 +1,6 @@
 name: Sync Overleaf with Zotero
 on: push
-permissions: read-all|write-all
+permissions: write-all
 
 jobs:
   run:

@@ -1,11 +1,13 @@
 name: Sync Overleaf with Zotero
 on: push
 permissions: write-all
-
 jobs:
   run:
     name: Sync Overleaf with Zotero
     runs-on: ubuntu-latest
+    env:
+      ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
+      ZOTERO_AUTO_DIR: zotero-auto
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -20,10 +22,10 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      - run: mkdir -p zotero-auto
+
       - name: Sync BibTeX
-        env:
-          ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
-        run: zoterotex sync group 4816962 zotero-automated.bib
+        run: zoterotex sync group 4816962 $ZOTER_AUTO_DIR/group-library.bib
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
@@ -31,4 +33,4 @@ jobs:
           author_name: Automated github action
           author_email: mail@example.com
           message: 'Updated BibTeX files'
-          add: '*.bib'
+          add: '$ZOTERO_AUTO_DIR'

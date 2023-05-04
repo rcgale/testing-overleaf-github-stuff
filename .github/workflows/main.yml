@@ -3,7 +3,6 @@ on: push
 permissions: write-all
 env:
   ZOTERO_AUTO_DIR: zotero-auto
-  ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
 
 jobs:
   run:
@@ -26,7 +25,9 @@ jobs:
       - run: mkdir -p zotero-auto
 
       - name: Sync BibTeX
-        run: zoterotex sync group 4816962 $ZOTER_AUTO_DIR/group-library.bib
+        env:
+          ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
+        run: zoterotex sync group 4816962 $ZOTERO_AUTO_DIR/group-library.bib
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9

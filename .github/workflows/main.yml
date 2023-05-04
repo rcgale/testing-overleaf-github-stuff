@@ -1,0 +1,31 @@
+name: Sync Overleaf with Zotero
+on: push
+
+jobs:
+  run:
+    name: Sync Overleaf with Zotero
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+
+      - run: pip install zoterotex
+
+      - name: Sync BibTeX
+        env:
+          ZOTERO_API_KEY: ${{ secrets.ZoteroApiKey }}
+        run: zoterotex sync group 4816962 zotero-automated.bib
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: Automated github action
+          author_email: mail@example.com
+          message: 'Updated BibTeX files'
+          add: '*.bib'
